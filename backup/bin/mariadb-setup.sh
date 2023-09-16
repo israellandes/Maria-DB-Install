@@ -1,23 +1,27 @@
 #!/bin/bash
 
 # Load the password from the environment variable
-source ./set_password.sh
+source "$(dirname "$0")/set_password.sh"
 
-# Modify the SQL file to replace the placeholder with the password
-sed -i "s/YourNewPasswordHere/$MARIADB_PASSWORD/" ./sql/mariadb_setup.sql
+# Modify the SQL file to replace the placeholders with the actual values
+sed -i "s/YourNewPasswordHere/$MARIADB_PASSWORD/" "$(dirname "$0")/sql/mariadb-setup.sql"
+sed -i "s/YourUsernameHere/$DB_USERNAME/" "$(dirname "$0")/sql/mariadb-setup.sql"
+sed -i "s/YourDatabaseNameHere/$DB_NAME/" "$(dirname "$0")/sql/mariadb-setup.sql"
 
 # Remove any existing Maria DB install / Database
 sudo apt remove mariadb-server mariadb-client -y
 
 # Installs new Maria DB
-sudo apt -y update && sudo apt -y upgrade
+sudo apt update -y
+sudo apt upgrade -y --assume-yes
 sudo apt install mariadb-server mariadb-client -y
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
 
 # Run the SQL script with the password from the environment variable
-sudo mysql -u root -p"$MARIADB_PASSWORD" < ./sql/mariadb_setup.sql
+sudo mysql -u root -p"$MARIADB_PASSWORD" < "$(dirname "$0")/sql/mariadb-setup.sql"
 
 # Optional: Unset the environment variable after use
 unset MARIADB_PASSWORD
-
+unset DB_NAME
+unset DB_USERNAME

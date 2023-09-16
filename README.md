@@ -10,8 +10,12 @@ The script replaces the mysql_secure_installation with a more concise prompt ins
 
 1. Run the `install.sh`
 
-2. The default files will be installed and `mariadb-setup.sh` will be ran
+2. Enter your Root Users Password
 
-3. Enter your new Maria DB root password
+3. Enter Your Database Name
 
-4. When the script finishes it will delete all traces of your password from server.
+4. Enter Your Root Database User
+
+5. The default files will be installed and `mariadb-setup.sh` will run.
+
+6. When the script finishes it will delete all traces of your password from server.
