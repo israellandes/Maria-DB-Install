@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Starts Maria DB Install
-cd ./bin && ./bin/mariadb-setup.sh
+cd ./bin && ./mariadb-setup.sh
 
 # Removes All Plain Text Files with Newly Cteated Passwords
 cd .. && rm -dr ./bin
