@@ -9,7 +9,12 @@ sed -i "s/YourUsernameHere/$DB_USERNAME/" "$(dirname "$0")/sql/mariadb-setup.sql
 sed -i "s/YourDatabaseNameHere/$DB_NAME/" "$(dirname "$0")/sql/mariadb-setup.sql"
 
 # Remove any existing Maria DB install / Database
+sudo systemctl stop mariadb
+sudo systemctl disable mariadb
 sudo apt remove mariadb-server mariadb-client -y
+sudo apt purge mariadb-server mariadb-client -y
+sudo rm -rf /etc/mysql/
+sudo apt autoremove
 
 # Installs new Maria DB
 sudo apt update -y
